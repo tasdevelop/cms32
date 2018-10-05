@@ -8,7 +8,6 @@
             autowidth: true,
             colNames:[
             'relationno',
-            'aksi',
             'photo',
             'status_key',
             'grp_pi',
@@ -52,7 +51,6 @@
             ],
             colModel:[
                 {name:'member_key', index:'member_key',sortable:false, search: false},
-                {name:'aksi', index:'aksi', width:70, fixed:true, sortable:false, search: false},
                 {name:'photofile', index:'photofile', width:65, fixed:true, stype :'select', searchoptions:{sopt:['eq'], value:":semua;ada:ada;kosong:kosong"}},
                 {name:'status_key', index:'status_key', width:50, fixed:true, stype: 'select'},
                 {name:'grp_pi', index:'grp_pi', width:60, fixed:true},

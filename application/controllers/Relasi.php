@@ -187,7 +187,6 @@ class Relasi extends CI_Controller {
 			$responce->rows[$i]['id']   = $row->member_key;
 			$responce->rows[$i]['cell'] = array(
 				$row->member_key,
-				$view.$edit.$del,
 				$photofile,
 				$row->status_key,
 				$row->grp_pi,

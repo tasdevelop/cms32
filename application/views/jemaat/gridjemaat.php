@@ -42,7 +42,6 @@
             'kebaktian_key',
             'persekutuan_key',
             'rayon_key',
-            'serving',
             'fax',
             'email',
             'website',
@@ -87,7 +86,6 @@
                 {name:'kebaktian_key', index:'kebaktian_key', width:90, fixed:true, stype: 'select'},
                 {name:'persekutuan_key', index:'persekutuan_key', width:90, fixed:true, stype: 'select'},
                 {name:'rayon_key', index:'rayon_key', width:90, fixed:true, stype: 'select'},
-                {name:'serving', index:'serving', width:90, fixed:true, searchoptions:{sopt:['cn']}},
                 {name:'fax', index:'fax', width:90, fixed:true, searchoptions:{sopt:['cn']}},
                 {name:'email', index:'email', width:90, fixed:true, searchoptions:{sopt:['cn']}},
                 {name:'website', index:'website', width:90, fixed:true, searchoptions:{sopt:['cn']}},
@@ -98,7 +96,6 @@
                 {name:'relation', index:'relation', width:90, fixed:true, searchoptions:{sopt:['cn']}, formatter:fontColorFormat},
                 {name:'oldgrp', index:'oldgrp', width:90, fixed:true, searchoptions:{sopt:['cn']}},
                 {name:'kebaktian', index:'kebaktian', width:90, fixed:true, searchoptions:{sopt:['cn']}},
-             //   {name:'tglbesuk', index:'tglbesuk', width:90, fixed:true},
                 {name:'jlhbesuk', index:'jlhbesuk', width:90, fixed:true,search:false,sortable:false},
                 {name:'tglbesukterakhir', index:'tglbesukterakhir', width:90, fixed:true},
                 {name:'teambesuk', index:'teambesuk', width:90, fixed:true, searchoptions:{sopt:['cn']}, formatter:fontColorFormat},
@@ -374,6 +371,7 @@
                         $("#"+formname+" span[id=tip]").html("<img class='icon' src='<?php echo base_url(); ?>libraries/icon/16x16/warning.png'>");
                         return false;
                     }
+                    console.log($("#"+formname).attr("action"));
                     return $.ajax({
                         type: $("#"+formname).attr("method"),
                         url: $("#"+formname).attr("action"),
@@ -382,6 +380,7 @@
                         dataType: "json",
                         async: true,
                         success: function(data) {
+                            console.log(data);
                             if(data.status=='sukses' && data.photofile!="") {
                                 $('#loading').html('<img src="<?php echo base_url(); ?>libraries/img/loading.gif">');
                                 $.ajaxFileUpload({
@@ -465,16 +464,13 @@
 
     }
 
-    function besuk(recno){
+    function besuk(member_key){
         $.ajax({
-            url:"<?php echo base_url(); ?>besuk/set/?recno="+recno,
+            url:"<?php echo base_url(); ?>besuk/set/?member_key="+member_key,
             success:function(data){
                 //alert(data);
             }
         });
-       // alert(recno);
-        //page="<?php echo base_url()?>besuk/index/?recno="+recno;
-           // $('#databesuk').html('<img src="<?php echo base_url()?>libraries/img/loading.gif">').load(page);
     }
 
 
@@ -542,6 +538,5 @@
         <div id="foto"></div>
         <div id="datarelasi"></div>
     </div>
-    <div data-options="closable:false,cache:false,href:'<?php echo base_url(); ?>besuk/?op=jemaat'" title="Data Besuk" style="padding:10px" ></div>
-
+    <div data-options="closable:false,cache:false,href:'<?php echo base_url(); ?>besuk/jemaat/?op=jemaat'" title="Data Besuk" style="padding:10px" ></div>
 </div>

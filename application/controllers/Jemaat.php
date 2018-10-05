@@ -309,7 +309,6 @@ class Jemaat extends MY_Controller {
 				$row->kebaktian_key,
 				$row->persekutuan_key,
 				$row->rayon_key,
-				$row->serving,
 				$row->fax,
 				$row->email,
 				$row->website,
