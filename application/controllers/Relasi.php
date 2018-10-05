@@ -166,30 +166,30 @@ class Relasi extends CI_Controller {
 			else{
 				$photofile="<img style='margin:0 17px;' src='".base_url()."uploads/small_nofoto.jpg' id='btnzoomrelasi' fimage='nofoto.jpg' class='dg-picture-zoom'>";
 			}
-			if(substr($acl,0,1)==1){
-				$view='<a href="#" relationno='.$row->relationno.' recno='.$row->recno.' title="view" class="btnviewrelasi" style="float:left"><span class="ui-icon ui-icon-document"></span></a>';
+			if(hasPermission('jemaat','view')){
+				$view='<a href="#" relationno='.$row->relationno.' memberkey='.$row->member_key.' title="view" class="btnviewrelasi" style="float:left"><span class="ui-icon ui-icon-document"></span></a>';
 			}
 			else{
 				$view='<span style="float:left" class="ui-state-disabled ui-icon ui-icon-document"></span>';
 			}
-			if(substr($acl,2,1)==1){
-				$edit='<a href="#" relationno='.$row->relationno.' recno='.$row->recno.' title="Edit" class="btneditrelasi" style="float:left"><span class="ui-icon ui-icon-pencil"></span></a>';
+			if(hasPermission('jemaat','edit')){
+				$edit='<a href="#" relationno='.$row->relationno.' memberkey='.$row->member_key.' title="Edit" class="btneditrelasi" style="float:left"><span class="ui-icon ui-icon-pencil"></span></a>';
 			}
 			else{
 				$edit='<span style="float:left" class="ui-state-disabled ui-icon ui-icon-pencil"></span>';
 			}
-			if(substr($acl,3,1)==1){
-				$del='<a href="#" relationno='.$row->relationno.' recno='.$row->recno.' title="Del" class="btndelrelasi" style="float:left"><span class="ui-icon ui-icon-trash"></span></a>';
+			if(hasPermission('jemaat','delete')){
+				$del='<a href="#" relationno='.$row->relationno.' memberkey='.$row->member_key.' title="Del" class="btndelrelasi" style="float:left"><span class="ui-icon ui-icon-trash"></span></a>';
 			}
 			else{
 				$del='<span class="ui-state-disabled ui-icon ui-icon-trash"></span>';
 			}
-			$responce->rows[$i]['id']   = $row->recno;
+			$responce->rows[$i]['id']   = $row->member_key;
 			$responce->rows[$i]['cell'] = array(
-				$row->recno,
+				$row->member_key,
 				$view.$edit.$del,
 				$photofile,
-				$row->statusid,
+				$row->status_key,
 				$row->grp_pi,
 				$row->relationno,
 				$row->memberno,
@@ -203,31 +203,31 @@ class Relasi extends CI_Controller {
 				$row->address,
 				$row->add2,
 				$row->city,
-				$row->genderid,
-				$row->pstatusid,
+				$row->gender_key,
+				$row->pstatus_key,
 				$row->pob,
-				$row->dobview,
+				$row->dob,
 				$row->umur,
-				$row->bloodid,
-				$row->kebaktianid,
-				$row->persekutuanid,
-				$row->rayonid,
+				$row->blood_key,
+				$row->kebaktian_key,
+				$row->persekutuan_key,
+				$row->rayon_key,
 				$row->serving,
 				$row->fax,
 				$row->email,
 				$row->website,
 				$row->baptismdocno,
 				$row->baptis,
-				$row->baptismdateview,
+				$row->baptismdate,
 				$row->remark,
 				$row->relation,
 				$row->oldgrp,
 				$row->kebaktian,
-				$row->tglbesukview,
+				$row->tglbesuk,
 				$row->teambesuk,
 				$row->description,
 				$row->modifiedby,
-				$row->modifiedonview
+				$row->modifiedon
 				);
 			$i++;
 		}

@@ -67,77 +67,202 @@ class Jemaat extends MY_Controller {
 		$data['rayon'] = getComboParameter('RAYON');
 		$this->render('jemaat/gridjemaat',$data);
 	}
+	// function grid3($status=''){
+	// 	$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+	// 	$rows = isset($_GET['rows']) ? intval($_GET['rows']) : 10;
+	// 	$sort = isset($_GET['sort']) ? strval($_GET['sort']) : 'member_key';
+	// 	$order = isset($_GET['order']) ? strval($_GET['order']) : 'asc';
+
+	// 	$filterRules = isset($_GET['filterRules']) ? ($_GET['filterRules']) : '';
+	// 	$cond = '';
+	// 	$where="";
+	// 	if($status=="m"){
+	// 		$where .= " where status_key='9' ";
+	// 	}else if($status=="pi"){
+	// 		$where .= " where grp_pi=1 ";
+	// 	}else{
+	// 		$where .= " where status_key != '9' and status_key != '18' ";
+	// 	}
+	// 	if (!empty($filterRules)){
+	// 		$cond = ' and  1=1 ';
+	// 		$filterRules = json_decode($filterRules);
+
+
+	// 		foreach($filterRules as $rule){
+	// 			$rule = get_object_vars($rule);
+	// 			$field = $rule['field'];
+	// 			$op = $rule['op'];
+	// 			$value = $rule['value'];
+
+	// 			if (!empty($value)){
+	// 				if($field=="umur"){
+	// 					$field = " DATE_FORMAT(NOW(),'%Y') - DATE_FORMAT(dob,'%Y') ";
+	// 					$op="equal";
+	// 				}
+	// 				if ($op == 'contains'){
+	// 					$cond .= " and ($field like '%$value%')";
+	// 				} else if ($op == 'equal'){
+	// 					$cond .= " and $field = '$value'";
+	// 				}else if($op == 'notequal'){
+	// 					$cond .= " and $field != '' ";
+	// 				}
+
+	// 			}
+	// 		}
+	// 	}
+	// 	$cond = $where.$cond;
+	// 	$sql = $this->mjemaat->count($cond);
+	// 	$total = $sql->num_rows();
+	// 	$offset = ($page - 1) * $rows;
+	// 	$data = $this->mjemaat->getM($cond,$sort,$order,$rows,$offset)->result();
+	// 	$_SESSION['exceljemaat']= $order."|".$sort."|".$cond;
+	// 	foreach($data as $row){
+	// 		$relation='<a href="#" id="'.$row->relationno.'" title="View Relation" class="relation"><span class="ui-icon ui-icon-note"></span></a>';
+	// 		if($row->photofile!=""){
+	// 			$photofile="<img style='width:20px;height:16px;' src='".base_url()."uploads/small_".$row->photofile."' class='btnzoom' onclick='zoom(\"medium_".$row->photofile."\")'>";
+	// 		}
+	// 		else{
+	// 			$data_photo="medium_nofoto.jpg";
+	// 			$photofile="<img style='width:20px;' src='".base_url()."uploads/small_nofoto.jpg' class='btnzoom' onclick='zoom(\"".$data_photo."\")'>";
+	// 		}
+	// 		$row->photofile = $photofile;
+	// 		$view='';
+	// 		$edit='';
+	// 		$del='';
+	// 			$view = '<button id='.$row->member_key.' class="icon-view_detail" onclick="viewJemaat(\'view\',\''.$row->member_key.'\',\'formjemaat\')" style="width:16px;height:16px;border:0"></button> ';
+
+	// 			$edit = '<button id='.$row->member_key.' class="icon-edit" onclick="save(\'edit\',\''.$row->member_key.'\',\'formjemaat\',null);" style="width:16px;height:16px;border:0"></button> ';
+
+	// 			$del = '<button id='.$row->member_key.' class="icon-remove" onclick="del(\'del\','.$row->member_key.',\'formjemaat\');" style="width:16px;height:16px;border:0"></button>';
+
+	// 		$rel="";
+	// 	    $db1 = get_instance()->db->conn_id;
+
+
+
+	// 		$member_key = $row->member_key;
+	// 		$pembesukdari="";
+	// 		$remark="";
+	// 		$besukdate="";
+	// 		$q = mysqli_query($db1,"SELECT * FROM tblbesuk WHERE member_key='$member_key' ORDER BY besukdate DESC");
+	// 		if($dta = mysqli_fetch_array($q,MYSQLI_ASSOC)){
+	// 			$pembesukdari=$dta['pembesukdari'];
+	// 			$remark=$dta['remark'];
+	// 			$besukdate=$dta['besukdate'];
+	// 			$d=strtotime($besukdate);
+	// 			$besukdate = date("Y-m-d", $d);
+	// 		}
+
+	// 		$row->blood_key = $row->blood_key=='' || $row->blood_key=="-" ?'-':getParameterKey($row->blood_key)->parameterid;
+	// 		$row->gender_key = $row->gender_key=='' || $row->gender_key=="-" ?'-':getParameterKey($row->gender_key)->parametertext;
+	// 		$row->status_key = $row->status_key=='' || $row->status_key=="-" ?'-':getParameterKey($row->status_key)->parametertext;
+	// 		$row->kebaktian_key = $row->kebaktian_key==''  || $row->kebaktian_key=="-"  ?'-':getParameterKey($row->kebaktian_key)->parametertext;
+	// 		$row->persekutuan_key  = $row->persekutuan_key=='' || $row->persekutuan_key=="-"?'-':getParameterKey($row->persekutuan_key)->parametertext;
+	// 		$row->rayon_key = $row->rayon_key=='' || $row->rayon_key=="-"  ?'-':getParameterKey($row->rayon_key)->parametertext;
+	// 		$row->pstatus_key =  $row->pstatus_key=='' || $row->pstatus_key=="-" ?'-':getParameterKey($row->pstatus_key)->parametertext;
+	// 		// if($row->member_key==7)
+	// 		// 	$row->phoneticname = $this->pinyin->pinyin($row->chinesename);
+
+	// 		$jlhbesuk = $this->mjemaat->jlhbesuk($row->member_key);
+	// 		$tglbesukterakhir = $this->mjemaat->tglbesukterakhir($row->member_key);
+
+	// 		$row->dob=$row->dob!="00-00-0000"?$row->dob:'-';
+	// 		$row->baptismdate=$row->baptismdate!="00-00-0000"?$row->baptismdate:'-';
+	// 		$row->umur = $row->umur==Date("Y")?'-':$row->umur;
+	// 		$row->relationno = $row->relationno==0?"-":$row->relationno;
+	// 		$row->jlhbesuk = $jlhbesuk;
+	// 		$row->tglbesukterakhir = $besukdate;
+	// 		$row->pembesukdari = $pembesukdari;
+	// 		$row->remark = $status;
+
+	// 		$row->aksi =$view.$edit.$del;
+	// 	}
+	// 	$response = new stdClass;
+	// 	$response->total=$total;
+	// 	$response->rows = $data;
+	// 	$_SESSION['excel']= "asc|member_key|";
+	// 	echo json_encode($response);
+	// }
 	function grid3($status=''){
-		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-		$rows = isset($_GET['rows']) ? intval($_GET['rows']) : 10;
-		$sort = isset($_GET['sort']) ? strval($_GET['sort']) : 'member_key';
-		$order = isset($_GET['order']) ? strval($_GET['order']) : 'asc';
 
-		$filterRules = isset($_GET['filterRules']) ? ($_GET['filterRules']) : '';
-		$cond = '';
-		$where="";
-		if($status=="m"){
-			$where .= " where status_key='9' ";
-		}else if($status=="pi"){
-			$where .= " where grp_pi=1 ";
-		}else{
-			$where .= " where status_key != '9' and status_key != '18' ";
+		@$page = $_POST['page'];
+		@$limit = $_POST['rows'];
+		@$sidx = $_POST['sidx'];
+		@$sord = $_POST['sord'];
+		if (!$sidx)
+		    $sidx = 1;
+		@$totalrows = isset($_POST['totalrows']) ? $_POST['totalrows'] : false;
+		if (@$totalrows) {
+		   @$limit = $totalrows;
 		}
-		if (!empty($filterRules)){
-			$cond = ' and  1=1 ';
-			$filterRules = json_decode($filterRules);
 
-
-			foreach($filterRules as $rule){
-				$rule = get_object_vars($rule);
-				$field = $rule['field'];
-				$op = $rule['op'];
-				$value = $rule['value'];
-
-				if (!empty($value)){
-					if($field=="umur"){
-						$field = " DATE_FORMAT(NOW(),'%Y') - DATE_FORMAT(dob,'%Y') ";
-						$op="equal";
-					}
-					if ($op == 'contains'){
-						$cond .= " and ($field like '%$value%')";
-					} else if ($op == 'equal'){
-						$cond .= " and $field = '$value'";
-					}else if($op == 'notequal'){
-						$cond .= " and $field != '' ";
-					}
-
-				}
+		@$filters = $_POST['filters'];
+		@$search = $_POST['_search'];
+			$where1="";
+			$where2="";
+			if($status=="m"){
+				$where1 = " WHERE status_key='9' ";
 			}
-		}
-		$cond = $where.$cond;
-		$sql = $this->mjemaat->count($cond);
-		$total = $sql->num_rows();
-		$offset = ($page - 1) * $rows;
-		$data = $this->mjemaat->getM($cond,$sort,$order,$rows,$offset)->result();
-		$_SESSION['exceljemaat']= $order."|".$sort."|".$cond;
-		foreach($data as $row){
-			$relation='<a href="#" id="'.$row->relationno.'" title="View Relation" class="relation"><span class="ui-icon ui-icon-note"></span></a>';
-			if($row->photofile!=""){
-				$photofile="<img style='width:20px;height:16px;' src='".base_url()."uploads/small_".$row->photofile."' class='btnzoom' onclick='zoom(\"medium_".$row->photofile."\")'>";
+			else if($status=="pi"){
+				$where1 = " WHERE grp_pi=1 ";
 			}
 			else{
-				$data_photo="medium_nofoto.jpg";
-				$photofile="<img style='width:20px;' src='".base_url()."uploads/small_nofoto.jpg' class='btnzoom' onclick='zoom(\"".$data_photo."\")'>";
+				$where1 = " WHERE status_key!='9' and status_key!='18' ";
 			}
-			$row->photofile = $photofile;
-			$view='';
-			$edit='';
-			$del='';
-				$view = '<button id='.$row->member_key.' class="icon-view_detail" onclick="viewJemaat(\'view\',\''.$row->member_key.'\',\'formjemaat\')" style="width:16px;height:16px;border:0"></button> ';
+       		if($search== "true") {
+				$where2 = " AND (".$this->operation($filters).")";
+		    }
+		    $where = $where1." ".$where2;
 
-				$edit = '<button id='.$row->member_key.' class="icon-edit" onclick="save(\'edit\',\''.$row->member_key.'\',\'formjemaat\',null);" style="width:16px;height:16px;border:0"></button> ';
+		$sql = $this->mjemaat->count($where);
+		$count = $sql->num_rows();
+		if ($count > 0) {
+		    @$total_pages = ceil($count / $limit);
+		} else {
+		    $total_pages = 0;
+		}
+		if ($page > $total_pages)
+		    @$page = $total_pages;
+		if ($limit < 0)
+		    @$limit = 0;
+			$start = $limit * $page - $limit;
+		if ($start < 0)
+		    @$start = 0;
+		$data = $this->mjemaat->getM($where, $sidx, $sord, $limit, $start);
+		$_SESSION['exceljemaat']= $sord."|".$sidx."|".$where;
+		@$responce->page = $page;
+		@$responce->total = $total_pages;
+		@$responce->records = $count;
+		$i=0;
 
-				$del = '<button id='.$row->member_key.' class="icon-remove" onclick="del(\'del\','.$row->member_key.',\'formjemaat\');" style="width:16px;height:16px;border:0"></button>';
+		foreach($data->result() as $row){
 
+			if($row->photofile!=""){
+				$photofile="<img style='margin:0 17px;' src='".base_url()."uploads/small_".$row->photofile."' id='btnzoom' fimage='".$row->photofile."' class='dg-picture-zoom'>";
+			}
+			else{
+				$photofile="<img style='margin:0 17px;' src='".base_url()."uploads/small_nofoto.jpg' id='btnzoom' fimage='nofoto.jpg' class='dg-picture-zoom'>";
+			}
+			if(hasPermission('jemaat','view')){
+				$view='<a href="#" id='.$row->member_key.' title="View" class="btnview" style="float:left"><span class="ui-icon ui-icon-document"></span></a>';
+			}
+			else{
+				$view='<span style="float:left" class="ui-state-disabled ui-icon ui-icon-document"></span>';
+			}
+			if(hasPermission('jemaat','edit')){
+				$edit='<a href="#" id='.$row->member_key.' title="Edit" class="btnedit" style="float:left"><span class="ui-icon ui-icon-pencil"></span></a>';
+			}
+			else{
+				$edit='<span style="float:left" class="ui-state-disabled ui-icon ui-icon-pencil"></span>';
+			}
+			if(hasPermission('jemaat','delete')){
+				$del='<a href="#" id='.$row->member_key.' title="Del" class="btndel" style="float:left"><span class="ui-icon ui-icon-trash"></span></a>';
+			}
+			else{
+				$del='<spans style="float:left" class="ui-state-disabled ui-icon ui-icon-trash"></span>';
+			}
 			$rel="";
 		    $db1 = get_instance()->db->conn_id;
-
 
 
 			$member_key = $row->member_key;
@@ -146,6 +271,7 @@ class Jemaat extends MY_Controller {
 			$besukdate="";
 			$q = mysqli_query($db1,"SELECT * FROM tblbesuk WHERE member_key='$member_key' ORDER BY besukdate DESC");
 			if($dta = mysqli_fetch_array($q,MYSQLI_ASSOC)){
+				//$dta = "checked";
 				$pembesukdari=$dta['pembesukdari'];
 				$remark=$dta['remark'];
 				$besukdate=$dta['besukdate'];
@@ -153,35 +279,128 @@ class Jemaat extends MY_Controller {
 				$besukdate = date("Y-m-d", $d);
 			}
 
-			$row->blood_key = $row->blood_key=='' || $row->blood_key=="-" ?'-':getParameterKey($row->blood_key)->parameterid;
-			$row->gender_key = $row->gender_key=='' || $row->gender_key=="-" ?'-':getParameterKey($row->gender_key)->parametertext;
-			$row->status_key = $row->status_key=='' || $row->status_key=="-" ?'-':getParameterKey($row->status_key)->parametertext;
-			$row->kebaktian_key = $row->kebaktian_key==''  || $row->kebaktian_key=="-"  ?'-':getParameterKey($row->kebaktian_key)->parametertext;
-			$row->persekutuan_key  = $row->persekutuan_key=='' || $row->persekutuan_key=="-"?'-':getParameterKey($row->persekutuan_key)->parametertext;
-			$row->rayon_key = $row->rayon_key=='' || $row->rayon_key=="-"  ?'-':getParameterKey($row->rayon_key)->parametertext;
-			$row->pstatus_key =  $row->pstatus_key=='' || $row->pstatus_key=="-" ?'-':getParameterKey($row->pstatus_key)->parametertext;
-			// if($row->member_key==7)
-			// 	$row->phoneticname = $this->pinyin->pinyin($row->chinesename);
-
 			$jlhbesuk = $this->mjemaat->jlhbesuk($row->member_key);
 			$tglbesukterakhir = $this->mjemaat->tglbesukterakhir($row->member_key);
-
-			$row->dob=$row->dob!="00-00-0000"?$row->dob:'-';
-			$row->baptismdate=$row->baptismdate!="00-00-0000"?$row->baptismdate:'-';
-			$row->umur = $row->umur==Date("Y")?'-':$row->umur;
-			$row->relationno = $row->relationno==0?"-":$row->relationno;
-			$row->jlhbesuk = $jlhbesuk;
-			$row->tglbesukterakhir = $besukdate;
-			$row->pembesukdari = $pembesukdari;
-			$row->remark = $status;
-
-			$row->aksi =$view.$edit.$del;
+			$select="<spans style='float:left;margin-top:3px;margin-left:4px;'><input style='width:11px' $rel type='checkbox' name='selectboxid[]' id='selectboxid' value='".$row->member_key."'></span>";
+			$responce->rows[$i]['id']   = $row->member_key;
+			$responce->rows[$i]['cell'] = array(
+				$member_key,
+				$view.$edit.$del.$select,
+				$photofile,
+				$row->status_key,
+				$row->grp_pi,
+				$row->relationno,
+				$row->memberno,
+				$row->membername,
+				$row->chinesename,
+				$row->phoneticname,
+				$row->tel_h,
+				$row->tel_o,
+				$row->handphone,
+				$row->address,
+				$row->add2,
+				$row->city,
+				$row->gender_key,
+				$row->pstatus_key,
+				$row->pob,
+				$row->dob,
+				$row->umur,
+				$row->blood_key,
+				$row->kebaktian_key,
+				$row->persekutuan_key,
+				$row->rayon_key,
+				$row->serving,
+				$row->fax,
+				$row->email,
+				$row->website,
+				$row->baptismdocno,
+				$row->baptis,
+				$row->baptismdate,
+				$row->remark,
+				$row->relation,
+				$row->oldgrp,
+				$row->kebaktian,
+				$jlhbesuk,
+				$besukdate,
+				$pembesukdari,
+				$remark,
+				$row->modifiedby,
+				$row->modifiedon
+				);
+			$i++;
 		}
-		$response = new stdClass;
-		$response->total=$total;
-		$response->rows = $data;
-		$_SESSION['excel']= "asc|member_key|";
-		echo json_encode($response);
+		echo json_encode($responce);
+	}
+	function operation($filters){
+        $filters = str_replace('\"','"' ,$filters);
+        $filters = str_replace('"[','[' ,$filters);
+        $filters = str_replace(']"',']' ,$filters);
+		$filters = json_decode($filters);
+		$where = " ";
+		$whereArray = array();
+		$rules = $filters->rules;
+		$groupOperation = $filters->groupOp;
+		foreach($rules as $rule) {
+		    $fieldName = $rule->field;
+		    $fieldData = escapeString($rule->data);
+			   	switch ($rule->op) {
+					case "eq": $fieldOperation = " = '".$fieldData."'"; break;
+					case "ne": $fieldOperation = " != '".$fieldData."'"; break;
+					case "lt": $fieldOperation = " < '".$fieldData."'"; break;
+					case "gt": $fieldOperation = " > '".$fieldData."'"; break;
+					case "le": $fieldOperation = " <= '".$fieldData."'"; break;
+					case "ge": $fieldOperation = " >= '".$fieldData."'"; break;
+					case "nu": $fieldOperation = " = ''"; break;
+					case "nn": $fieldOperation = " != ''"; break;
+					case "in": $fieldOperation = " IN (".$fieldData.")"; break;
+					case "ni": $fieldOperation = " NOT IN '".$fieldData."'"; break;
+					case "bw": $fieldOperation = " LIKE '".$fieldData."%'"; break;
+					case "bn": $fieldOperation = " NOT LIKE '".$fieldData."%'"; break;
+					case "ew": $fieldOperation = " LIKE '%".$fieldData."'"; break;
+					case "en": $fieldOperation = " NOT LIKE '%".$fieldData."'"; break;
+					case "cn": $fieldOperation = " LIKE '%".$fieldData."%'"; break;
+					case "nc": $fieldOperation = " NOT LIKE '%".$fieldData."%'"; break;
+					default: $fieldOperation = ""; break;
+		        }
+		    if($fieldOperation != "") {
+		    	if($fieldName=="dob"){
+                	$whereArray[] = "DATE_FORMAT(dob,'%d-%m-%Y')".$fieldOperation;
+                }
+                else if($fieldName=="baptismdate"){
+                	$whereArray[] = "DATE_FORMAT(baptismdate,'%d-%m-%Y')".$fieldOperation;
+                }
+                else if($fieldName=="tglbesuk"){
+                	$whereArray[] = "DATE_FORMAT(tglbesuk,'%d-%m-%Y')".$fieldOperation;
+                }
+                else if($fieldName=="modifiedon"){
+                	$whereArray[] = "DATE_FORMAT(modifiedon,'%d-%m-%Y %T')".$fieldOperation;
+                }
+                else if($fieldName=="umur"){
+                	$whereArray[] = "DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(dob, '%Y')".$fieldOperation;
+                }
+                else if($fieldName=="tglbesukterakhir"){
+                	$whereArray[] = "DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(dob, '%Y')".$fieldOperation;
+                }
+                else if($fieldName=="photofile"){
+                	if($fieldData=="ada"){
+                		$whereArray[] = "photofile !='' ";
+                	}
+                	else{
+                		$whereArray[] = "photofile ='' ";
+                	}
+                }
+                else{
+                	$whereArray[] = $fieldName.$fieldOperation;
+                }
+		    }
+		}
+
+		if (count($whereArray)>0) {
+		    $where .= join(" ".$groupOperation." ", $whereArray);
+		} else {
+			$where = " ";
+		}
+		return $where;
 	}
 	function gridBesuk(){
 		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
